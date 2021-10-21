@@ -46,5 +46,7 @@ class TowTruckServiceTest {
     void testCarPlateGenerator() {
         String carPlate = towTruckService.generateCarPlate();
         assertEquals(6, carPlate.length());
+        verify(random, times(3)).nextInt(26);
+        verify(random, times(3)).nextInt(9);
     }
 }
