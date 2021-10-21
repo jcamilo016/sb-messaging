@@ -3,8 +3,8 @@ package com.eafit.sac.services.messaging.service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -39,5 +39,14 @@ class TowTruckServiceTest {
 
         when(random.nextInt(maxValue)).thenReturn(4);
         assertEquals(9, towTruckService.randomValueGenerator(minValue, maxValue));
+    }
+
+    @DisplayName("Test random randomValueGenerator")
+    @Test
+    void testCarPlateGenerator() {
+        String carPlate = towTruckService.generateCarPlate();
+        assertEquals(6, carPlate.length());
+        verify(towTruckService, times(3)).randomLetterGenerator();
+        verify(towTruckService, times(3)).randomValueGenerator(0,9);
     }
 }
