@@ -1,7 +1,5 @@
 package com.eafit.sac.services.messaging.service;
 
-import com.eafit.sac.services.messaging.config.EmailConfig;
-import com.eafit.sac.services.messaging.config.SMSConfig;
 import com.eafit.sac.services.messaging.entity.Message;
 import com.eafit.sac.services.messaging.repository.MessageRepository;
 import com.eafit.sac.services.messaging.utils.MessageStatus;
@@ -9,35 +7,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 @SpringBootTest
 class MessageServiceTest {
-
-    @Mock
-    SMSConfig smsConfig;
-
-    @Mock
-    EmailConfig emailConfig;
-
-    @Mock
-    SimpleMailMessage simpleMailMessage;
-
-    @Mock
-    JavaMailSender emailSender;
-
-    @Mock
-    ModelMapper modelMapper;
 
     @Mock
     MessageRepository messageRepository;
