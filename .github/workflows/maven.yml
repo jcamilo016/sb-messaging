@@ -6,8 +6,6 @@ name: Java CI with Maven and docker
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   test:
