@@ -39,7 +39,7 @@ public class MessageController {
         return new ResponseEntity<>(logRegistries, HttpStatus.OK);
     }
 
-    @Operation(summary = "Send an SMS message to the number and with the message specified in the body")
+    @Operation(summary = "Send an SMS message to the phone number and with the message specified in the body")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "SMS message sent"),
             @ApiResponse(responseCode = "406", description = "Invalid phone number",
