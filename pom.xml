@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.eafit.sac.services</groupId>
 	<artifactId>messaging</artifactId>
-	<version>1.1-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>messaging</name>
 	<description>Project for CI/CD eafit class</description>
 	<properties>
