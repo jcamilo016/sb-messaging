@@ -51,7 +51,7 @@ public class MessageController {
         return new ResponseEntity<>(messageSent, HttpStatus.ACCEPTED);
     }
 
-    @Operation(summary = "Send an email message to the email with the subject and message specified in the body")
+    @Operation(summary = "Send an email message to the email address with the subject and message body specified in the body")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Email message sent"),
             @ApiResponse(responseCode = "406", description = "Invalid email address provided",
