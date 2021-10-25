@@ -4,6 +4,7 @@ import com.eafit.sac.services.messaging.config.EmailConfig;
 import com.eafit.sac.services.messaging.config.SMSConfig;
 import com.eafit.sac.services.messaging.dto.SendSMSRequest;
 import com.eafit.sac.services.messaging.entity.Message;
+import com.eafit.sac.services.messaging.exception.SendSMSException;
 import com.eafit.sac.services.messaging.repository.MessageRepository;
 import com.eafit.sac.services.messaging.utils.MessageStatus;
 import com.twilio.exception.ApiException;
@@ -98,32 +99,15 @@ class MessageServiceTest {
     void sendSMSAction() {
         SendSMSRequest smsRequest = new SendSMSRequest("3168684548", "Test message");
         when(modelMapper.map(smsRequest, Message.class)).thenReturn(new Message(1L, new Date(), "3168684548", MessageStatus.SENT, "mensaje prueba"));
-        when(smsConfig.getAccountSID()).thenReturn("AC934af84c376e1cd6f9acff2681648b51");
-        when(smsConfig.getAuthToken()).thenReturn("01b76607b1bf09cb13775c9cea5a386d");
-        when(smsConfig.getMessageSID()).thenReturn("MG471837b289cae702b0df76c221b9bd80");
+        when(smsConfig.getAccountSID()).thenReturn("AccountSID");
+        when(smsConfig.getAuthToken()).thenReturn("authToken");
+        when(smsConfig.getMessageSID()).thenReturn("messageSID");
         when(messageRepository.save(any(Message.class))).thenReturn(new Message(1L, new Date(), "3168684548", MessageStatus.SENT, "mensaje prueba"));
 
         Message sentSMS = messageService.sendSMSMessage(smsRequest);
 
+        assertThrows(SendSMSException.class, () -> messageService.sendSMSMessage(smsRequest));
         assertEquals("3168684548", sentSMS.getSendTo());
-    }
-
-    @DisplayName("Test if sms message is not sent")
-    @Test
-    void testErrorSendingSMSAction() {
-        SendSMSRequest smsRequest = new SendSMSRequest("3168684548", "Test message");
-        when(modelMapper.map(smsRequest, Message.class)).thenReturn(new Message(1L, new Date(), "3168684548", MessageStatus.SENT, "mensaje prueba"));
-        when(smsConfig.getAccountSID()).thenReturn("AC934af84c376e1cd6f9acff2681648b51");
-        when(smsConfig.getAuthToken()).thenReturn("01b76607b1bf09cb13775c9cea5a386d");
-        when(smsConfig.getMessageSID()).thenReturn("MG471837b289cae702b0df76c221b9bd80");
-        when(msgCreator.create()).thenThrow(new ApiException("An error ocurred sending the sms"));
-
-        when(messageRepository.save(any(Message.class))).thenReturn(new Message(1L, new Date(), "3168684548", MessageStatus.NOT_SENT, "mensaje prueba"));
-
-        Message sentSMS = messageService.sendSMSMessage(smsRequest);
-
-        assertThrows(ApiException.class, () -> msgCreator.create());
-        assertEquals(MessageStatus.NOT_SENT, sentSMS.getSentStatus());
     }
 
     @DisplayName("Test if email message is sent")
