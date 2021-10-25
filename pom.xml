@@ -87,6 +87,7 @@
 						<exclude>com/eafit/sac/services/messaging/entity/*.*</exclude>
 						<exclude>com/eafit/sac/services/messaging/exception/*.*</exclude>
 						<exclude>com/eafit/sac/services/messaging/controller/*.*</exclude>
+						<exclude>com/eafit/sac/services/messaging/config/*.*</exclude>
 						<exclude>com/eafit/sac/services/messaging/MessagingApplication.class</exclude>
 					</excludes>
 				</configuration>

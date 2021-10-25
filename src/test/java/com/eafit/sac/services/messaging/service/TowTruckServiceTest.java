@@ -7,18 +7,18 @@ import com.eafit.sac.services.messaging.entity.Message;
 import com.eafit.sac.services.messaging.utils.MessageStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
 import java.util.Random;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 class TowTruckServiceTest {
 
     @Mock
@@ -33,8 +33,10 @@ class TowTruckServiceTest {
     @DisplayName("Test random letter generator")
     @Test
     void testRandomLetterGenerator() {
-        when(random.nextInt()).thenReturn(1);
-        assertEquals('a', towTruckService.randomLetterGenerator());
+        doReturn(1).when(random).nextInt(26);
+        char result = towTruckService.randomLetterGenerator();
+
+        assertEquals('b', result);
     }
 
     @DisplayName("Test random randomValueGenerator")
