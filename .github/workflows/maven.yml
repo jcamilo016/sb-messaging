@@ -45,6 +45,9 @@ jobs:
           replace: "${{secrets.DB_NAME}}"
           include: "src/main/resources/application.properties"
 
+      - name: Modified files
+        run: echo ${{ steps.docker_build.outputs.modifiedFiles }}
+
       - name: Set up JDK 8
         uses: actions/setup-java@v2
         with:
