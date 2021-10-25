@@ -36,16 +36,15 @@ jobs:
         with:
           find: "${DB_HOST}"
           replace: "${{secrets.DB_HOST}}"
-          include: "src/main/resources/application.properties"
+          include: "**/application.properties"
+        run: echo ${{ steps.docker_build.outputs.modifiedFiles }}
 
       - name: Find and Replace DB Name
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "${DB_NAME}"
           replace: "${{secrets.DB_NAME}}"
-          include: "src/main/resources/application.properties"
-
-      - name: Modified files
+          include: "**/application.properties"
         run: echo ${{ steps.docker_build.outputs.modifiedFiles }}
 
       - name: Set up JDK 8
