@@ -7,12 +7,13 @@ import com.eafit.sac.services.messaging.entity.Message;
 import com.eafit.sac.services.messaging.exception.SendSMSException;
 import com.eafit.sac.services.messaging.repository.MessageRepository;
 import com.eafit.sac.services.messaging.utils.MessageStatus;
-import com.twilio.exception.ApiException;
 import com.twilio.rest.api.v2010.account.MessageCreator;
+import com.twilio.type.PhoneNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
@@ -48,6 +49,10 @@ class MessageServiceTest {
 
     @Mock
     Message msg;
+
+    @Mock
+    com.twilio.rest.api.v2010.account.Message createdMessage;
+
 
     @InjectMocks
     MessageService messageService;
@@ -94,9 +99,9 @@ class MessageServiceTest {
         verify(messageRepository, times(1)).save(msg);
     }
 
-    @DisplayName("Test if sms message is sent")
+    @DisplayName("Test if sms message sending fails")
     @Test
-    void sendSMSAction() {
+    void testErrorSendSMSMessage() {
         SendSMSRequest smsRequest = new SendSMSRequest("3168684548", "Test message");
         when(modelMapper.map(smsRequest, Message.class)).thenReturn(new Message(1L, new Date(), "3168684548", MessageStatus.SENT, "mensaje prueba"));
         when(smsConfig.getAccountSID()).thenReturn("AccountSID");
@@ -104,10 +109,8 @@ class MessageServiceTest {
         when(smsConfig.getMessageSID()).thenReturn("messageSID");
         when(messageRepository.save(any(Message.class))).thenReturn(new Message(1L, new Date(), "3168684548", MessageStatus.SENT, "mensaje prueba"));
 
-        Message sentSMS = messageService.sendSMSMessage(smsRequest);
-
         assertThrows(SendSMSException.class, () -> messageService.sendSMSMessage(smsRequest));
-        assertEquals("3168684548", sentSMS.getSendTo());
+
     }
 
     @DisplayName("Test if email message is sent")
