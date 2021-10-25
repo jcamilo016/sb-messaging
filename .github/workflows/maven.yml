@@ -22,6 +22,7 @@ jobs:
           cache: maven
       - name: Test with Maven
         run: mvn test
+
   build_and_docker_push:
 
     runs-on: ubuntu-latest
