@@ -46,7 +46,7 @@ class TowTruckServiceTest {
         int maxValue = 10;
 
         when(random.nextInt(maxValue)).thenReturn(6);
-        assertEquals(7, towTruckService.randomValueGenerator(minValue, maxValue));
+        assertEquals(6, towTruckService.randomValueGenerator(minValue, maxValue));
 
         when(random.nextInt(maxValue)).thenReturn(4);
         assertEquals(9, towTruckService.randomValueGenerator(minValue, maxValue));
