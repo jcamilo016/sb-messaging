@@ -109,7 +109,6 @@ class MessageServiceTest {
         when(messageRepository.save(any(Message.class))).thenReturn(new Message(1L, new Date(), "3168684548", MessageStatus.SENT, "mensaje prueba"));
 
         assertThrows(SendSMSException.class, () -> messageService.sendSMSMessage(smsRequest));
-
     }
 
     @DisplayName("Test if email message is sent")
